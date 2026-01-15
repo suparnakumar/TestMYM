@@ -29,4 +29,4 @@ st.video(video["url"])
 st.divider()
 st.caption("When you’re done, complete your Brain Check-out.")
 if st.button("Complete session ✅"):
-    st.switch_page("pages/3_Checkout.py")
+    st.switch_page("pages/Checkout.py")

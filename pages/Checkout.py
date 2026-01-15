@@ -9,17 +9,17 @@ require_login()
 session_id = get_active_session_id()
 if not session_id:
     st.warning("No active session found.")
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
 
 pre, post_existing = get_surveys_for_session(session_id)
 if not pre:
     st.error("Missing pre-survey for this session.")
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
 
 if post_existing:
     st.info("You already completed the check-out for this session.")
     clear_active_session()
-    st.switch_page("pages/4_Dashboard.py")
+    st.switch_page("pages/Dashboard.py")
 
 st.title("✅ Brain Check-out")
 st.caption("How did the session shift you?")
@@ -63,4 +63,4 @@ st.metric("Brain Score", post_score, delta=(post_score - pre_score))
 clear_active_session()
 
 if st.button("Go to Dashboard 📊"):
-    st.switch_page("pages/4_Dashboard.py")
+    st.switch_page("pages/Dashboard.py")

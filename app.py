@@ -40,6 +40,6 @@ pill("Flow: Check-in → Session → Check-out → Dashboard")
 st.divider()
 st.write("Use the sidebar to begin.")
 if st.button("Start Brain Check-in"):
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
 
 st.button("Log out", on_click=lambda: st.session_state.clear())

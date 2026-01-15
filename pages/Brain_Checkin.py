@@ -53,4 +53,4 @@ set_active_session_id(session["id"])
 st.divider()
 st.write(f"**Today’s session:** {video['title']}")
 if st.button("Start Session ▶"):
-    st.switch_page("pages/2_Session.py")
+    st.switch_page("pages/Session.py")

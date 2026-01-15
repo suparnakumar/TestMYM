@@ -16,7 +16,7 @@ rows = get_sessions_with_surveys(user_id=u["id"], limit=200)
 if not rows:
     st.info("No sessions yet. Start your first Brain Check-in.")
     if st.button("Start Brain Check-in"):
-        st.switch_page("pages/1_Brain_Checkin.py")
+        st.switch_page("pages/Brain_Checkin.py")
     st.stop()
 
 # Build dataframe
@@ -91,4 +91,4 @@ st.dataframe(df[display_cols], use_container_width=True)
 
 st.divider()
 if st.button("Start a new session"):
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
