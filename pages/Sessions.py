@@ -8,12 +8,12 @@ require_login()
 session_id = get_active_session_id()
 if not session_id:
     st.warning("No active session found. Start with Brain Check-in.")
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
 
 session = get_session(session_id)
 if not session:
     st.error("Session not found in DB.")
-    st.switch_page("pages/1_Brain_Checkin.py")
+    st.switch_page("pages/Brain_Checkin.py")
 
 video = get_default_video()  # MVP: always the latest seeded video
 
