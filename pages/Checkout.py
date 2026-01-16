@@ -6,20 +6,26 @@ from lib.coach import compute_brain_score
 st.set_page_config(page_title="Brain Check-out", page_icon="✅", layout="centered")
 require_login()
 
-session_id = get_active_session_id()
+# Keep a stable session_id across reruns (button clicks rerun the whole script)
+session_id = get_active_session_id() or st.session_state.get("last_session_id")
 if not session_id:
     st.warning("No active session found.")
     st.switch_page("pages/Brain_Checkin.py")
+    st.stop()
 
 pre, post_existing = get_surveys_for_session(session_id)
 if not pre:
     st.error("Missing pre-survey for this session.")
     st.switch_page("pages/Brain_Checkin.py")
+    st.stop()
 
+# If a post survey already exists, route to Dashboard (and avoid redirect loops on rerun)
 if post_existing:
     st.info("You already completed the check-out for this session.")
+    st.session_state["last_session_id"] = session_id
     clear_active_session()
     st.switch_page("pages/Dashboard.py")
+    st.stop()
 
 st.title("✅ Brain Check-out")
 st.caption("How did the session shift you?")
@@ -59,8 +65,12 @@ post_score = compute_brain_score(post)
 st.success("Session saved.")
 st.metric("Brain Score", post_score, delta=(post_score - pre_score))
 
-# Clear active session so user doesn’t resubmit accidentally
-clear_active_session()
+# IMPORTANT: don't clear active session yet — the Dashboard button click reruns this page.
+# Keep a stable reference so reruns don't bounce the user back to Check-in.
+st.session_state["last_session_id"] = session_id
 
 if st.button("Go to Dashboard 📊"):
+    clear_active_session()
+    st.session_state.pop("last_session_id", None)
     st.switch_page("pages/Dashboard.py")
+    st.stop()
