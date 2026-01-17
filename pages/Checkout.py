@@ -1,7 +1,7 @@
 import streamlit as st
 from lib.ui import require_login, get_active_session_id, clear_active_session
 from lib.db import insert_survey, end_session, get_surveys_for_session
-from lib.coach import compute_brain_score
+from lib.coach import compute_brain_score, generate_insight
 
 st.set_page_config(page_title="Brain Check-out", page_icon="✅", layout="centered")
 require_login()
@@ -64,6 +64,12 @@ post_score = compute_brain_score(post)
 
 st.success("Session saved.")
 st.metric("Brain Score", post_score, delta=(post_score - pre_score))
+
+# Display AI-powered insight
+insight = generate_insight(pre, post)
+st.markdown("---")
+st.markdown("**Your Brain Coach says:**")
+st.info(insight)
 
 # IMPORTANT: don't clear active session yet — the Dashboard button click reruns this page.
 # Keep a stable reference so reruns don't bounce the user back to Check-in.
